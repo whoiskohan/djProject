@@ -52,7 +52,7 @@ def contact(request):
 
 
 def login(request):
-    return redirect('/admin/')
+    return HttpResponse('Login')
 
 
 class ShowPost(DataMixin, DetailView):
@@ -87,3 +87,17 @@ class WomanCategory(DataMixin, ListView):
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound("<h1> Page Not Found </h1>")
+
+
+class RegisterUser(DataMixin, CreateView):
+    form_class = RegisterUserForm
+    template_name = 'woman/register.html'
+    success_url = reverse_lazy('login')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context_def = self.get_user_context(title='Register')
+        context.update(context_def)
+        return context
+
+

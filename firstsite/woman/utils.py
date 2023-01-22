@@ -4,7 +4,6 @@ from django.db.models import Count
 menu = [{'title': "About", 'url_name': "about"},
         {'title': "Add page", 'url_name': "add_page"},
         {'title': "Contact", 'url_name': "contact"},
-        {'title': "Sign in", 'url_name': "login"}
         ]
 
 
