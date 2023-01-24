@@ -26,7 +26,7 @@ class WomanHome(DataMixin, ListView):
         return context
 
     def get_queryset(self):
-        return Woman.objects.filter(is_published=True)
+        return Woman.objects.filter(is_published=True).select_related('category')
 
 
 def about(request):
@@ -75,12 +75,13 @@ class WomanCategory(DataMixin, ListView):
     allow_empty = False
 
     def get_queryset(self):
-        return Woman.objects.filter(category__slug=self.kwargs['category_slug'], is_published=True)
+        return Woman.objects.filter(category__slug=self.kwargs['category_slug'], is_published=True).select_related('category')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context_def = self.get_user_context(title='Category: ' + str(context['posts'][0].category),
-                                            category_selected=context['posts'][0].category_id)
+        c = Category.objects.get(slug=self.kwargs['category_slug'])
+        context_def = self.get_user_context(title='Category: ' + str(c.name),
+                                            category_selected=c.pk)
         context.update(context_def)
         return context
 
