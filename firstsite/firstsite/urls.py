@@ -23,6 +23,7 @@ from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('captcha/', include('captcha.urls')),
     path('', include('woman.urls')),
 ]
 
